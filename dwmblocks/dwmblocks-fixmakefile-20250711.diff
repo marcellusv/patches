@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index 75109ac..74de3e0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,7 @@
+ PREFIX  := /usr/local
+ CC      := cc
+-CFLAGS  := -pedantic -Wall -Wno-deprecated-declarations -Os
++###https://github.com/rust-onig/rust-onig/issues/196#issuecomment-2855445818 -> -std=gnu17
++CFLAGS  := -pedantic -Wall -Wno-deprecated-declarations -Os -std=gnu17
+ LDFLAGS := -lX11
+ 
+ # FreeBSD (uncomment)
