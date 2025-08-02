@@ -1,0 +1,22 @@
+Index: dwmblocks/Makefile
+===================================================================
+--- dwmblocks.orig/Makefile
++++ dwmblocks/Makefile
+@@ -1,6 +1,7 @@
+ PREFIX  := /usr/local
+ CC      := cc
+-CFLAGS  := -pedantic -Wall -Wno-deprecated-declarations -Os
++###https://github.com/rust-onig/rust-onig/issues/196#issuecomment-2855445818 -> -std=gnu17
++CFLAGS  := -pedantic -Wall -Wno-deprecated-declarations -Os -std=gnu17
+ LDFLAGS := -lX11
+ 
+ # FreeBSD (uncomment)
+@@ -23,7 +24,7 @@ blocks.h:
+ 	cp blocks.def.h $@
+ 
+ clean:
+-	rm -f *.o *.gch dwmblocks
++	rm -f *.o *.gch dwmblocks blocks.h
+ 
+ install: dwmblocks
+ 	mkdir -p ${DESTDIR}${PREFIX}/bin
