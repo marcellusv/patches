@@ -1,0 +1,12 @@
+Index: surf/Makefile
+===================================================================
+--- surf.orig/Makefile
++++ surf/Makefile
+@@ -39,6 +39,7 @@ $(WOBJ): $(WSRC)
+ clean:
+ 	rm -f surf $(OBJ)
+ 	rm -f $(WLIB) $(WOBJ)
++	rm -f config.h
+ 
+ distclean: clean
+ 	rm -f config.h surf-$(VERSION).tar.gz
