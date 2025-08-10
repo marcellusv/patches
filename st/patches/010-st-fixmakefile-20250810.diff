@@ -1,0 +1,13 @@
+Index: st/Makefile
+===================================================================
+--- st.orig/Makefile
++++ st/Makefile
+@@ -24,7 +24,7 @@ st: $(OBJ)
+ 	$(CC) -o $@ $(OBJ) $(STLDFLAGS)
+ 
+ clean:
+-	rm -f st $(OBJ) st-$(VERSION).tar.gz
++	rm -f st $(OBJ) st-$(VERSION).tar.gz config.h
+ 
+ dist: clean
+ 	mkdir -p st-$(VERSION)
