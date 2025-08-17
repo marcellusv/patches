@@ -1,0 +1,84 @@
+From 70a21457fdbcbcdf26efb1329dd29872b7fcd8e3 Mon Sep 17 00:00:00 2001
+From: ysl2 <www.songli.yu@gmail.com>
+Date: Sun, 29 Oct 2023 15:45:05 +0800
+Subject: [PATCH] Give killclient an augument to control the beheviour: arg.ui
+ == 0 for normal kill current client; arg.ui == 1 for kill other clients in
+ current tag (except current focusing client); arg.ui == 2 for kill all
+ clients in current tag (include focusing client).
+
+---
+ config.def.h |  2 ++
+ dwm.c        | 30 ++++++++++++++++++++++++------
+ 2 files changed, 26 insertions(+), 6 deletions(-)
+
+Index: dwm/config.def.h
+===================================================================
+--- dwm.orig/config.def.h
++++ dwm/config.def.h
+@@ -76,6 +76,8 @@ static const Key keys[] = {
+ 	{ MODKEY,                       XK_Return, zoom,           {0} },
+ 	{ MODKEY,                       XK_Tab,    view,           {0} },
+ 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
++    { MODKEY|ControlMask,           XK_c,      killclient,     {.ui = 1} },  // kill unselect
++    { MODKEY|ShiftMask|ControlMask, XK_c,      killclient,     {.ui = 2} },  // killall
+ 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+ 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+ 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+Index: dwm/dwm.c
+===================================================================
+--- dwm.orig/dwm.c
++++ dwm/dwm.c
+@@ -180,6 +180,7 @@ static void grabbuttons(Client *c, int f
+ static void grabkeys(void);
+ static void incnmaster(const Arg *arg);
+ static void keypress(XEvent *e);
++static void killthis(Client *c);
+ static void killclient(const Arg *arg);
+ static void manage(Window w, XWindowAttributes *wa);
+ static void mappingnotify(XEvent *e);
+@@ -1192,15 +1193,12 @@ keypress(XEvent *e)
+ }
+ 
+ void
+-killclient(const Arg *arg)
+-{
+-	if (!selmon->sel)
+-		return;
+-	if (!sendevent(selmon->sel, wmatom[WMDelete])) {
++killthis(Client *c) {
++	if (!sendevent(c, wmatom[WMDelete])) {
+ 		XGrabServer(dpy);
+ 		XSetErrorHandler(xerrordummy);
+ 		XSetCloseDownMode(dpy, DestroyAll);
+-		XKillClient(dpy, selmon->sel->win);
++		XKillClient(dpy, c->win);
+ 		XSync(dpy, False);
+ 		XSetErrorHandler(xerror);
+ 		XUngrabServer(dpy);
+@@ -1208,6 +1206,26 @@ killclient(const Arg *arg)
+ }
+ 
+ void
++killclient(const Arg *arg)
++{
++    Client *c;
++
++	if (!selmon->sel)
++		return;
++
++    if (!arg->ui || arg->ui == 0) {
++        killthis(selmon->sel);
++        return;
++    }
++
++    for (c = selmon->clients; c; c = c->next) {
++        if (!ISVISIBLE(c) || (arg->ui == 1 && c == selmon->sel))
++            continue;
++        killthis(c);
++    }
++}
++
++void
+ manage(Window w, XWindowAttributes *wa)
+ {
+ 	Client *c, *t = NULL;
