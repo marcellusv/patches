@@ -15,7 +15,7 @@ Index: dwm/config.def.h
 ===================================================================
 --- dwm.orig/config.def.h
 +++ dwm/config.def.h
-@@ -76,6 +76,8 @@ static const Key keys[] = {
+@@ -83,6 +83,8 @@ static const Key keys[] = {
  	{ MODKEY,                       XK_Return, zoom,           {0} },
  	{ MODKEY,                       XK_Tab,    view,           {0} },
  	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
