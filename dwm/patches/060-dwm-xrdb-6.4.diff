@@ -40,7 +40,7 @@ Index: dwm/config.def.h
  };
  
  /* volume keys */
-@@ -69,7 +70,7 @@ static const Layout layouts[] = {
+@@ -75,7 +76,7 @@ static const Layout layouts[] = {
  
  /* commands */
  static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -49,7 +49,7 @@ Index: dwm/config.def.h
  static const char *termcmd[]  = { "st", NULL };
  
  static const Key keys[] = {
-@@ -99,6 +100,7 @@ static const Key keys[] = {
+@@ -105,6 +106,7 @@ static const Key keys[] = {
  	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
  	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
  	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },

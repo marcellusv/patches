@@ -1,5 +1,6 @@
 010-dwm-fixmakefile-20250817.diff
-012-dwm-hardwarekeys-20250831.diff
+011-dwm-hardwarekeys-20250831.diff
+012-dwm-customkeys-20251006.diff
 020-dwm-status2d-6.3.diff
 025-dwm-statuscmd-status2d-20210405-60bb3df.diff
 030-dwm-attachaside-6.4.diff
